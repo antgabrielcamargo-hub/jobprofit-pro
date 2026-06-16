@@ -2,21 +2,29 @@
 
 Business management dashboard designed for freelancers, entrepreneurs and service providers.
 
+## Live Demo
+
+🚀 Live Application:
+
+https://magnificent-truffle-533a35.netlify.app/
+
 ## Overview
 
 JobProfit Pro helps users manage jobs, track revenue, control expenses and monitor business profitability through a simple and intuitive dashboard.
 
-This project was built to provide a practical solution for professionals who need a clear view of their financial performance and business growth.
+The application was developed to provide a practical solution for independent professionals and small businesses that need better financial visibility and performance tracking.
 
 ## Features
 
 - Revenue tracking
 - Expense management
 - Profit analysis
-- Business dashboard
+- Client management
+- Job management
 - Financial reports
 - Local data storage
 - Responsive interface
+- Backup and restore functionality
 
 ## Technologies
 
@@ -41,34 +49,55 @@ This project was built to provide a practical solution for professionals who nee
 
 ## Purpose
 
-The purpose of this project is to help freelancers, entrepreneurs and service providers organize their finances, monitor profitability and make better business decisions.
+The goal of this project is to help freelancers, entrepreneurs and service providers organize their business operations, monitor profitability and make data-driven decisions.
 
 ## Future Improvements
 
 - Cloud database integration
 - User authentication
-- Export reports to PDF
+- PDF report generation
 - Advanced analytics
 - Multi-user support
 - Mobile application version
+- API integrations
 
 ## Installation
 
-1. Download the project files.
-2. Open the project folder.
-3. Run `index.html` in your browser.
+1. Clone the repository
+
+```bash
+git clone https://github.com/antgabrielcamargo-hub/jobprofit-pro.git
+```
+
+2. Open the project folder
+
+3. Run `index.html` in your browser
 
 No additional installation is required.
+
+## Project Status
+
+✅ Active
+
+✅ Public Portfolio Project
+
+✅ Live Demo Available
 
 ## Author
 
 **Gabriel Camargo**
 
-Front-End Developer focused on business applications, dashboards and management systems.
+Front-End Developer focused on:
 
-GitHub:
+- Business Dashboards
+- CRM Systems
+- Inventory Management Applications
+- Business Automation Tools
+
+GitHub Profile:
+
 https://github.com/antgabrielcamargo-hub
 
 ---
 
-⭐ If you found this project interesting, feel free to explore the code and leave feedback.
+If you found this project interesting, feel free to explore the code, test the live demo and share your feedback.
