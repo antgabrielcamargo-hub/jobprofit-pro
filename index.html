@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobProfit Pro - Service Business Profit Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toast" class="toast hidden"></div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">JP</div>
+        <div>
+          <h1>JobProfit Pro</h1>
+          <p>Real profit for every job.</p>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+        <button class="nav-btn" data-section="jobs">Jobs</button>
+        <button class="nav-btn" data-section="clients">Clients</button>
+        <button class="nav-btn" data-section="reports">Reports</button>
+        <button class="nav-btn" data-section="guide">How It Works</button>
+        <button class="nav-btn" data-section="settings">Backup</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span>Total Net Profit</span>
+        <strong id="sidebarProfit">$0.00</strong>
+        <small id="sidebarMargin">0% margin</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Service Business Profit Tracker</p>
+          <h2 id="pageTitle">Dashboard</h2>
+          <p class="subtitle">Track revenue, materials, labor, unpaid jobs, margins and monthly performance.</p>
+        </div>
+
+        <div class="top-actions">
+          <button class="btn ghost" id="loadDemoBtn">Load Demo</button>
+          <button class="btn ghost" id="exportCSVBtn">Export CSV</button>
+          <button class="btn primary" data-section-target="jobs">Add Job</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="section active">
+        <div class="hero">
+          <div>
+            <p>REAL PROFIT CONTROL</p>
+            <h1>You don't need more work.<br>You need more profit.</h1>
+            <span>Track materials, fuel, labor and real profit for every job in one simple place.</span>
+          </div>
+
+          <div class="hero-profit">
+            <span>REAL PROFIT</span>
+            <strong id="heroProfit">$0.00</strong>
+            <small id="heroProfitNote">After materials, fuel, other costs and labor.</small>
+          </div>
+        </div>
+
+        <div class="filters">
+          <label>
+            Period
+            <select id="periodFilter">
+              <option value="all">All time</option>
+              <option value="thisMonth">This month</option>
+              <option value="lastMonth">Last month</option>
+              <option value="last90">Last 90 days</option>
+              <option value="year">This year</option>
+            </select>
+          </label>
+
+          <label>
+            Status
+            <select id="statusFilter">
+              <option value="all">All statuses</option>
+              <option value="Estimate">Estimate</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Paid">Paid</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="cards premium-cards">
+          <div class="card highlight"><span>This Month Revenue</span><strong id="thisMonthRevenue">$0.00</strong><small>Current month sales</small></div>
+          <div class="card highlight"><span>This Month Profit</span><strong id="thisMonthProfit">$0.00</strong><small>Real profit this month</small></div>
+          <div class="card danger-card"><span>Overdue Revenue</span><strong id="overdueRevenue">$0.00</strong><small>Open jobs past due date</small></div>
+          <div class="card"><span>Open Revenue</span><strong id="openRevenue">$0.00</strong><small id="openRevenueJobs">Revenue not collected yet</small></div>
+        </div>
+
+        <div class="cards">
+          <div class="card"><span>Total Revenue</span><strong id="totalRevenue">$0.00</strong><small>Money charged to clients</small></div>
+          <div class="card"><span>Total Costs</span><strong id="totalCosts">$0.00</strong><small>Materials, fuel, other costs</small></div>
+          <div class="card"><span>Labor Cost</span><strong id="laborCosts">$0.00</strong><small>Your time has a cost</small></div>
+          <div class="card"><span>Average Margin</span><strong id="avgMargin">0%</strong><small id="marginQuality">No data yet</small></div>
+        </div>
+
+        <div class="panel insight-banner">
+          <div>
+            <span class="eyebrow">Profit Insight</span>
+            <h3 id="profitInsightTitle">Add your first job to unlock insights.</h3>
+            <p id="profitInsightText" class="muted">JobProfit Pro will show you where profit is leaking, which jobs are worth repeating and which jobs need better pricing.</p>
+          </div>
+          <button class="btn primary" data-section-target="reports">View Reports</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Monthly Performance</h3>
+              <span class="pill blue">Revenue vs Profit</span>
+            </div>
+            <div id="monthlyBars" class="bars"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Profit Score</h3>
+              <span class="pill" id="profitScorePill">0/100</span>
+            </div>
+            <div class="score-box">
+              <div class="score-ring"><span id="profitScore">0</span></div>
+              <div>
+                <h4 id="profitScoreTitle">Add your first job</h4>
+                <p id="profitScoreText" class="muted">Your score improves with higher margins, fewer unpaid jobs and fewer money-losing jobs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2 mt">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Recent Jobs</h3>
+              <button class="mini-btn" data-section-target="jobs">View all</button>
+            </div>
+            <div id="recentJobs" class="list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Unpaid / Open Jobs</h3>
+              <span class="pill warning" id="unpaidCount">0 open</span>
+            </div>
+            <div id="unpaidJobs" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="jobs" class="section">
+        <div class="grid-2">
+          <div class="panel sticky-panel">
+            <h3 id="jobFormTitle">Add New Job</h3>
+
+            <form id="jobForm">
+              <input type="hidden" id="editingJobId" />
+
+              <label>Client</label>
+              <select id="jobClient" required></select>
+
+              <label>Job Title</label>
+              <input id="jobTitle" type="text" placeholder="Example: Bathroom repair" required />
+
+              <div class="form-grid">
+                <div>
+                  <label>Revenue Charged ($)</label>
+                  <input id="jobRevenue" type="number" min="0" step="0.01" required />
+                </div>
+                <div>
+                  <label>Status</label>
+                  <select id="jobStatus">
+                    <option value="Estimate">Estimate</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Paid">Paid</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div>
+                  <label>Material Cost ($)</label>
+                  <input id="jobMaterial" type="number" min="0" step="0.01" value="0" />
+                </div>
+                <div>
+                  <label>Fuel / Travel ($)</label>
+                  <input id="jobFuel" type="number" min="0" step="0.01" value="0" />
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div>
+                  <label>Other Costs ($)</label>
+                  <input id="jobOther" type="number" min="0" step="0.01" value="0" />
+                </div>
+                <div>
+                  <label>Due Date</label>
+                  <input id="jobDueDate" type="date" />
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div>
+                  <label>Hours Worked</label>
+                  <input id="jobHours" type="number" min="0" step="0.1" value="0" />
+                </div>
+                <div>
+                  <label>Hourly Labor Cost ($)</label>
+                  <input id="jobHourlyRate" type="number" min="0" step="0.01" value="0" />
+                </div>
+              </div>
+
+              <label>Notes</label>
+              <textarea id="jobNotes" placeholder="Materials used, client requests, important details..."></textarea>
+
+              <button class="btn primary" type="submit">Save Job</button>
+              <button class="btn ghost hidden" type="button" id="cancelEditJob">Cancel Edit</button>
+            </form>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h3>All Jobs</h3>
+              <input id="jobSearch" class="search" type="text" placeholder="Search jobs, clients or status..." />
+            </div>
+            <div id="jobsList" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="clients" class="section">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Add Client</h3>
+
+            <form id="clientForm">
+              <label>Client Name</label>
+              <input id="clientName" type="text" placeholder="John Smith" required />
+
+              <label>Phone</label>
+              <input id="clientPhone" type="text" placeholder="+1 555 000 0000" />
+
+              <label>Address</label>
+              <input id="clientAddress" type="text" placeholder="Austin, TX" />
+
+              <button class="btn primary" type="submit">Save Client</button>
+            </form>
+          </div>
+
+          <div class="panel">
+            <h3>Clients</h3>
+            <div id="clientsList" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports" class="section">
+        <div class="cards">
+          <div class="card"><span>Best Client</span><strong id="bestClient">-</strong><small>Highest total profit</small></div>
+          <div class="card"><span>Best Job</span><strong id="bestJob">-</strong><small>Highest profit job</small></div>
+          <div class="card"><span>Worst Job</span><strong id="worstJob">-</strong><small>Lowest profit job</small></div>
+          <div class="card"><span>Jobs Losing Money</span><strong id="losingJobs">0</strong><small>Jobs below $0 profit</small></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Most Profitable Jobs</h3>
+            <div id="topJobs" class="list"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Lowest Profit Jobs</h3>
+            <div id="lowJobs" class="list"></div>
+          </div>
+        </div>
+
+        <div class="panel mt">
+          <h3>Profit by Client</h3>
+          <div id="profitByClient" class="list"></div>
+        </div>
+      </section>
+
+      <section id="guide" class="section">
+        <div class="panel guide">
+          <h3>How JobProfit Pro Helps You</h3>
+          <div class="guide-grid">
+            <div>
+              <span class="guide-number">1</span>
+              <h4>Add clients and jobs</h4>
+              <p>Track every service job with the client, revenue, due date and status.</p>
+            </div>
+            <div>
+              <span class="guide-number">2</span>
+              <h4>Enter real costs</h4>
+              <p>Add materials, fuel, other expenses and labor time. Your time is not free.</p>
+            </div>
+            <div>
+              <span class="guide-number">3</span>
+              <h4>See real profit</h4>
+              <p>Know exactly which jobs, clients and months are making or losing money.</p>
+            </div>
+            <div>
+              <span class="guide-number">4</span>
+              <h4>Export and backup</h4>
+              <p>Your data stays local in your browser. Export CSV or backup JSON anytime.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings" class="section">
+        <div class="panel">
+          <h3>Backup & Data</h3>
+          <p class="muted">Everything is stored locally in this browser. No server, no login, no monthly subscription.</p>
+
+          <div class="settings-actions">
+            <button class="btn primary" id="exportBackupBtn">Export Backup</button>
+            <label class="btn ghost file-label">
+              Import Backup
+              <input id="importBackupInput" type="file" accept=".json" hidden />
+            </label>
+            <button class="btn ghost" id="printReportBtn">Print Report</button>
+            <button class="btn danger" id="clearDataBtn">Clear All Data</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
